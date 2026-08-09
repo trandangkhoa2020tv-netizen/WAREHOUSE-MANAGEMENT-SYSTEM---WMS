@@ -6,10 +6,10 @@ An inventory management system for Windows desktop, consisting of a WinForms app
 
 | Project | Purpose |
 | --- | --- |
-| `QuanLyKhoHang.WinForms` | Desktop application: sign-in, master-data management, goods receipt/issue creation, dashboard, and Excel/PDF export. |
-| `QuanLyKhoHang.Api` | HTTP backend: JWT authentication, authorization, validation, business processing, audit logging, and PostgreSQL access. |
-| `QuanLyKhoHang.Shared` | Models and DTOs shared by the desktop application and API. |
-| `QuanLyKhoHang.Tests` | xUnit tests for validation, JWT, and security middleware. |
+| `InventoryManagement.WinForms` | Desktop application: sign-in, master-data management, goods receipt/issue creation, dashboard, and Excel/PDF export. |
+| `InventoryManagement.Api` | HTTP backend: JWT authentication, authorization, validation, business processing, audit logging, and PostgreSQL access. |
+| `InventoryManagement.Shared` | Models and DTOs shared by the desktop application and API. |
+| `InventoryManagement.Tests` | xUnit tests for validation, JWT, and security middleware. |
 
 All projects target `.NET 9`; WinForms targets `net9.0-windows`.
 
@@ -19,7 +19,7 @@ All projects target `.NET 9`; WinForms targets `net9.0-windows`.
 WinForms
   -> ApiClients
   -> HTTP JSON (X-API-Key when enabled; Bearer JWT after sign-in)
-  -> QuanLyKhoHang.Api
+  -> InventoryManagement.Api
   -> Services / Repositories
   -> PostgreSQL
 ```
@@ -38,7 +38,7 @@ WinForms does not connect directly to PostgreSQL. All authorization checks and c
 1. Create the `quanlyhanghoa` PostgreSQL database and run the schema:
 
    ```powershell
-   psql -U postgres -d quanlyhanghoa -f QuanLyKhoHang.WinForms/sql/create_tables.sql
+   psql -U postgres -d quanlyhanghoa -f InventoryManagement.WinForms/sql/create_tables.sql
    ```
 
 2. Set environment variables for the PowerShell session that runs the API:
@@ -53,20 +53,20 @@ WinForms does not connect directly to PostgreSQL. All authorization checks and c
 3. Restore packages and build:
 
    ```powershell
-   dotnet restore QuanLyKhoHang.sln
-   dotnet build QuanLyKhoHang.sln
+   dotnet restore InventoryManagement.sln
+   dotnet build InventoryManagement.sln
    ```
 
 4. Run the API:
 
    ```powershell
-   dotnet run --project QuanLyKhoHang.Api/QuanLyKhoHang.Api.csproj
+   dotnet run --project InventoryManagement.Api/InventoryManagement.Api.csproj
    ```
 
 5. Run the desktop application in another terminal:
 
    ```powershell
-   dotnet run --project QuanLyKhoHang.WinForms/QuanLyKhoHang.WinForms.csproj
+   dotnet run --project InventoryManagement.WinForms/InventoryManagement.WinForms.csproj
    ```
 
 By default, the API listens on `http://localhost:8088`. Swagger is available only in Development at `http://localhost:8088/swagger`.
@@ -113,7 +113,7 @@ The API limits request bodies to 256 KB, requires JSON for POST/PUT/PATCH API ca
 
 ## Database
 
-SQL files are in `QuanLyKhoHang.WinForms/sql/`:
+SQL files are in `InventoryManagement.WinForms/sql/`:
 
 | File | Purpose |
 | --- | --- |
@@ -128,19 +128,19 @@ Back up a production database before running migrations. The API does not migrat
 ## Tests
 
 ```powershell
-dotnet test QuanLyKhoHang.sln
+dotnet test InventoryManagement.sln
 ```
 
-The current tests do not require a real PostgreSQL instance. See the [test project README](QuanLyKhoHang.Tests/README.md) for coverage and detailed instructions.
+The current tests do not require a real PostgreSQL instance. See the [test project README](InventoryManagement.Tests/README.md) for coverage and detailed instructions.
 
 ## Quick structure
 
 ```text
-QuanLyKhoHang.sln
-QuanLyKhoHang.Api/        Minimal API backend
-QuanLyKhoHang.WinForms/   WinForms desktop application
-QuanLyKhoHang.Shared/     Shared models
-QuanLyKhoHang.Tests/      xUnit tests
+InventoryManagement.sln
+InventoryManagement.Api/        Minimal API backend
+InventoryManagement.WinForms/   WinForms desktop application
+InventoryManagement.Shared/     Shared models
+InventoryManagement.Tests/      xUnit tests
 docker-compose.yml        API + PostgreSQL for local Docker
 .env.example              Environment-variable template without secrets
 ```

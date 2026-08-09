@@ -2,7 +2,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: QuanLyKhoHang.Api/Dockerfile
+      dockerfile: InventoryManagement.Api/Dockerfile
     container_name: quan-ly-kho-hang-api
     restart: unless-stopped
     depends_on:
@@ -16,7 +16,7 @@ services:
       QLKH_DB_NAME: quanlyhanghoa
       QLKH_DB_USER: postgres
       QLKH_DB_PASSWORD: ${QLKH_DB_PASSWORD:?Set QLKH_DB_PASSWORD in .env or environment}
-      QUANLYKHOHANG_DISABLE_DESKTOP_LAUNCH: "1"
+      INVENTORYMANAGEMENT_DISABLE_DESKTOP_LAUNCH: "1"
     ports:
       - "8088:8080"
 
